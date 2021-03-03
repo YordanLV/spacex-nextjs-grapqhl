@@ -1,31 +1,39 @@
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { useRouter } from 'next/router'
 
 import Loading from '../components/loading';
+import { LAUNCH } from '../query/index';
 
-const LAUNCHES_PAST = gql`
-  query LaunchesPast {
-    launchesPast(limit: 10) {
-      mission_name
-      id
-      launch_date_local
+interface LaunchData {
+  launch: {
+    mission_name: string;
+    details: string;
+    links: {
+      flickr_images: [string];
+      video_link: string;
     }
   }
-`;
+}
 
-interface HomepageCardLaunch {
-  id: number;
-  mission_name: string;
-  launch_date_local: string;
+interface LaunchVariables {
+  id: string | string[];
 }
 
 const Home: React.FC = () => {
-  const { loading, error, data } = useQuery(LAUNCHES_PAST);
+  const router = useRouter()
+  const { id } = router.query
+
+  const { loading, error, data } = useQuery<LaunchData, LaunchVariables>(LAUNCH, { variables: { id } });
 
   if (loading) return <Loading />;
   if (error) return <p>Error</p>;
+
+  const { details, links, mission_name } = data.launch;
+
   return (
     <div>
-      kor
+      <div>{mission_name}</div>
+      <div>{details}</div>
     </div>
   );
 }
