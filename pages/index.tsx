@@ -1,19 +1,21 @@
 import { useQuery } from '@apollo/client';
-import Link from 'next/link'
 
-import Loading from '../components/loading';
 import { LAUNCHES_PAST } from '../query';
+import Feed from '../components/Feed';
+import LaunchCardFeed from '../components/LaunchCardFeed';
+import Layout from '../components/Layout';
+import Loading from '../components/Loading';
 
 interface LaunchPastTypes {
   id: number;
   mission_name: string;
+  details: string;
   launch_date_local: string;
 }
 
 interface LaunchesPastData {
   launchesPast: [LaunchPastTypes];
 }
-
 
 const Home: React.FC = () => {
   const { loading, error, data } = useQuery<LaunchesPastData>(LAUNCHES_PAST);
@@ -22,16 +24,20 @@ const Home: React.FC = () => {
   if (error) return <p>Error</p>;
 
   return (
-    <div>
-      {data.launchesPast.map((launch: LaunchPastTypes) => (
-        <Link key={launch.id} href={`/launch?id=${launch.id}`}>
-          <a title={launch.mission_name}>
-            <div>{launch.mission_name}</div>
-            <div>{launch.launch_date_local}</div>
-          </a>
-        </Link>
-      ))}
-    </div>
+    <Layout>
+      <Feed>
+        <h1>Last Launches 🚀</h1>
+        {data.launchesPast.map((launch: LaunchPastTypes) => (
+          <LaunchCardFeed
+            key={launch.id}
+            launchId={launch.id}
+            missionName={launch.mission_name}
+            details={launch.details}
+            launchDateLocal={launch.launch_date_local}
+          />
+        ))}
+      </Feed>
+    </Layout>
   );
 }
 

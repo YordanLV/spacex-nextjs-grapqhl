@@ -6,6 +6,7 @@ export const LAUNCHES_PAST = gql`
     launchesPast(limit: 10) {
       id
       mission_name
+      details
       launch_date_local
     }
   }

@@ -1,8 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router'
 
-import Loading from '../components/loading';
-import { LAUNCH } from '../query/index';
+import { LAUNCH } from '../query/';
+import Feed from '../components/Feed';
+import LaunchCard from '../components/LaunchCard';
+import Layout from '../components/Layout';
+import Loading from '../components/Loading';
 
 interface LaunchData {
   launch: {
@@ -28,13 +31,20 @@ const Home: React.FC = () => {
   if (loading) return <Loading />;
   if (error) return <p>Error</p>;
 
-  const { details, links, mission_name } = data.launch;
+  const { details, links: { flickr_images, video_link }, mission_name } = data.launch;
+  const randomPicture = flickr_images[Math.floor(Math.random() * flickr_images.length)];
 
   return (
-    <div>
-      <div>{mission_name}</div>
-      <div>{details}</div>
-    </div>
+    <Layout>
+      <Feed>
+        <LaunchCard>
+          {randomPicture && <img src={randomPicture} alt={mission_name} />}
+          <h1>{mission_name}</h1>
+          <article>{details}</article>
+          <a href={video_link}>Video Link</a>
+        </LaunchCard>
+      </Feed>
+    </Layout>
   );
 }
 
