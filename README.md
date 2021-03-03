@@ -25,3 +25,4 @@ yarn dev
 - Material UI or a similiar UI library for easier and more consistent UI.
 - With bigger code base I would most likely have all the types in the same place to have a better reusability.
 - Would use GraphQL framgents for better GraphQL query managment.
+- Lazy loading images and blured out effect while loading.
