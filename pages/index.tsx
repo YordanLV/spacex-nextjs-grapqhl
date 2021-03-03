@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 
-import { LAUNCHES_PAST } from '../query';
+import { LAUNCHES_PAST } from '../gql';
 import Feed from '../components/Feed';
 import LaunchCardFeed from '../components/LaunchCardFeed';
 import Layout from '../components/Layout';

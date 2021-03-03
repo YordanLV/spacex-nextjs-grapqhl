@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router'
 
-import { LAUNCH } from '../query/';
+import { LAUNCH } from '../gql';
 import withApollo from '../lib';
 import Feed from '../components/Feed';
 import LaunchCard from '../components/LaunchCard';
