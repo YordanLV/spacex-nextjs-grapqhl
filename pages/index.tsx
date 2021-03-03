@@ -5,6 +5,7 @@ import Feed from '../components/Feed';
 import LaunchCardFeed from '../components/LaunchCardFeed';
 import Layout from '../components/Layout';
 import Loading from '../components/Loading';
+import withApollo from '../lib';
 
 interface LaunchPastTypes {
   id: number;
@@ -41,4 +42,4 @@ const Home: React.FC = () => {
   );
 }
 
-export default Home;
+export default withApollo({ ssr: true })(Home);

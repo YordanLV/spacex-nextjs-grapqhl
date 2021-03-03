@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useRouter } from 'next/router'
 
 import { LAUNCH } from '../query/';
+import withApollo from '../lib';
 import Feed from '../components/Feed';
 import LaunchCard from '../components/LaunchCard';
 import Layout from '../components/Layout';
@@ -22,7 +23,7 @@ interface LaunchVariables {
   id: string | string[];
 }
 
-const Home: React.FC = () => {
+const Launch: React.FC = () => {
   const router = useRouter()
   const { id } = router.query
 
@@ -48,4 +49,4 @@ const Home: React.FC = () => {
   );
 }
 
-export default Home;
+export default withApollo({ ssr: true })(Launch);
